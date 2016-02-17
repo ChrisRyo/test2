@@ -1,0 +1,41 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.tomcat'
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.4'
+    }
+}
+
+dependencies {
+
+	compile 'javax.servlet:jstl:1.2'
+
+	// jersey
+	compile 'org.glassfish.jersey.ext:jersey-mvc:2.22.2'
+	compile 'org.glassfish.jersey.ext:jersey-mvc-jsp:2.22.2'
+	
+	// tomcat plugin
+	def tomcatVersion = '8.0.30'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+
+tomcat {
+    httpPort = 8080
+    httpsPort = 8443
+    enableSSL = true
+    contextPath = 'test2'
+}

@@ -1,8 +1,8 @@
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'com.bmuschko.tomcat'
+apply plugin: "java"
+apply plugin: "war"
+apply plugin: "com.bmuschko.tomcat"
 
-compileJava.options.encoding = 'UTF-8'
+compileJava.options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()
@@ -14,28 +14,37 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.4'
+        classpath "com.bmuschko:gradle-tomcat-plugin:2.2.4"
     }
 }
 
 dependencies {
+	
+	// jstl
+	compile "javax.servlet:jstl:1.2"
 
-	compile 'javax.servlet:jstl:1.2'
-
-	// jersey
-	compile 'org.glassfish.jersey.ext:jersey-mvc:2.22.2'
-	compile 'org.glassfish.jersey.ext:jersey-mvc-jsp:2.22.2'
+	// jersey mvc
+	def jerseyVersion = "2.22.2"
+	compile "org.glassfish.jersey.ext:jersey-mvc:${jerseyVersion}"
+	compile "org.glassfish.jersey.ext:jersey-mvc-jsp:${jerseyVersion}"
 	
 	// tomcat plugin
-	def tomcatVersion = '8.0.30'
+	def tomcatVersion = "8.0.30"
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+            
+    // hibernate
+    def hibernateVersion = "5.1.0.Final"
+    compile "org.hibernate:hibernate-core:${hibernateVersion}"
+    compile "org.hibernate:hibernate-entitymanager:${hibernateVersion}"
+    compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:1.0.1.Final"
+    
 }
 
 tomcat {
     httpPort = 8080
     httpsPort = 8443
     enableSSL = true
-    contextPath = 'test2'
+    contextPath = "test2"
 }
